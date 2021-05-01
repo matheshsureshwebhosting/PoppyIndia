@@ -5,5 +5,11 @@ $content = 'hello from world';
 $titles = 'From: balajijoswa@gmail.com' . "\r\n" .
     'Reply-To: balajijoswa@gmail.com' . "\r\n" .
     'X-Mailer: PHP/' .phpversion();
-mail($to, $title, $content, $titles);
+
+if(@mail($to, $title, $content, $titles))
+{
+  echo "Mail Sent Successfully";
+}else{
+  echo "Mail Not Sent";
+}
 ?>
