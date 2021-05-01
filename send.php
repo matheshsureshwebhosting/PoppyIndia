@@ -1,9 +1,9 @@
 <?php
-$to = 'sendto@outlook.com';
+$to = 'balaji.hdt@gmail.com';
 $title = 'title of mail';
 $content = 'hello from world';
-$titles = 'From: sendfrom@outlook.com' . "\r\n" .
-    'Reply-To: sendfrom@outlook.com' . "\r\n" .
+$titles = 'From: balajijoswa@gmail.com' . "\r\n" .
+    'Reply-To: balajijoswa@gmail.com' . "\r\n" .
     'X-Mailer: PHP/' .phpversion();
 mail($to, $title, $content, $titles);
 ?>
