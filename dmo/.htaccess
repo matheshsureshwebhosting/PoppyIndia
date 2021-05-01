@@ -1,0 +1,91 @@
+Options +FollowSymLinks
+# RewriteEngine On
+# RewriteCond %{HTTP_HOST} ^poppyindia.com$
+# RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+# RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+# RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+# RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
+# RewriteCond %{HTTP:X-Forwarded-Proto} !https
+# RewriteRule ^(.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# RewriteEngine On
+RewriteEngine On
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,NE,R=301]
+
+RewriteRule pu-foam-series-soffty-plus-mattress$ pu-foam-series-soffty-plus.php
+RewriteRule faq$ faq.php
+RewriteRule cart$ cart.php
+RewriteRule premium-series-selene-pillow-top-mattress$ premium-series-selene-pillow-top.php
+RewriteRule bedspreads$ bedspreads.php
+RewriteRule register$ register.php
+RewriteRule grandeur-pocketed-spring-with-natural-latex-mattress$ grand-series-grandeur.php
+RewriteRule gs-exuber-pillow-top-spring-mattress$ grand-series-exuber-pt.php
+RewriteRule pu-foam-pillows$ pu-foam-pillows.php
+RewriteRule medico-series-bonnel-spring-memory-foam-mattress$ medico-series.php
+RewriteRule aboutus$ aboutus.php
+RewriteRule rubberized-coir-series-mattress$ rubberized-coir-series.php
+RewriteRule protector$ protector.php
+RewriteRule pu-foam-series$ pu-foam-series.php
+RewriteRule neck-defender$ neck-defender.php
+RewriteRule return-policy$ return-policy.php
+RewriteRule login$ login.php
+RewriteRule polyester-fiber-pillow$ polyester-fiber-pillow.php
+RewriteRule micro-fiber-pillow$ micro-fiber-pillow.php
+RewriteRule premium-series-luxe-euro-top-mattress$ premium-series-luxe-euro-top.php
+RewriteRule premium-series-mattress$ premium-series.php
+RewriteRule comforter$ comforter.php
+RewriteRule rubberized-coir-series-saffron$ rubberized-coir-series-saffron.php
+RewriteRule terms-and-conditions$ terms-and-conditions.php
+RewriteRule warrenty$ warrenty.php
+RewriteRule tracking$ tracking.php
+RewriteRule grand-series-natural-latex-mattress$ grand-series.php
+RewriteRule grand-series-exuber-tight-top-spring-mattress$ grand-series-exuber.php
+RewriteRule pu-foam-series-soffty$ pu-foam-series-soffty.php
+RewriteRule medico-series-the-guardianz-memory-foam-mattress$ medico-series-the-guardianz-bonded-foam.php
+RewriteRule premium-series-luxe-tight-top-mattress$ premium-series-luxe-tight-top.php
+RewriteRule pu-foam-series-soffty-dlx-mattress$ pu-foam-series-soffty-dlx.php
+RewriteRule grand-series-grand-master-latex-mattress$ grand-series-grand-master.php
+RewriteRule rubberized-coir-series-saffron-plus-mattress$ rubberized-coir-series-saffron-plus.php
+RewriteRule forgot-password$ forgot-password.php
+RewriteRule medico-series-the-guardianz-bonnell-spring-mattress$ medico-series-the-guardianz.php
+RewriteRule medico-series-the-guardianz-latex-mattress$ medico-series-the-guardianz-latex.php
+RewriteRule premium-series-selene-tight-top-mattress$ premium-series-selene-tight-top.php
+RewriteRule rubberized-coir-series-desire-mattress$ rubberized-coir-series-desire.php
+RewriteRule rubberized-coir-series-saffron-dlx$ rubberized-coir-series-saffron-dlx.php
+RewriteRule blog$ blog.php
+RewriteRule 5-signs-that-you-should-purchase-a-new-mattress$ 5-signs-that-you-should-purchase-a-new-mattress.php
+RewriteRule foods-in-your-kitchen-to-help-you-sleep-better$ foods-in-your-kitchen-to-help-you-sleep-better.php
+RewriteRule good-sleep-routine$ good-sleep-routine.php
+RewriteRule foods-and-beverages-to-avoid-for-a-better-night-sleep$ foods-and-beverages-to-avoid-for-a-better-night-sleep.php
+RewriteRule how-to-clean-your-mattress$ how-to-clean-your-mattress.php
+
+
+# Redirect 301 /pu-foam-series-soffty-plus.php /pu-foam-series-soffty-plus-mattress  [R=301,L] 
+#Redirect 301 /faq.php /faq
+# Redirect 301 https://poppyindia.com/cart.php https://poppyindia.com/cart 
+
+# RewriteRule sadfasdf asfsadfsd
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php5_module>
+# php_flag asp_tags Off
+# php_flag display_errors Off
+# php_value max_execution_time 90
+# php_value max_input_time -1
+# php_value max_input_vars 1000
+# php_value memory_limit -1
+# php_value session.gc_maxlifetime 1440
+# php_value session.save_path "/tmp"
+# php_value upload_max_filesize 32M
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# This domain inherits the “PHP” package.
+# php -- END cPanel-generated handler, do not edit

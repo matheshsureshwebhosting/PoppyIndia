@@ -1,0 +1,332 @@
+/*
+Theme Name: Pacrose Wordpress Development
+Description: Pacrose - A Retina Multi Purpose Wordpress Theme
+Author: Pacrose
+Author URI: http://www.pacrose.co.uk
+Version: 2.0
+*/
+
+* {
+	box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  background: #d6d6d6;
+  width: 5px;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+::-webkit-scrollbar-track-piece {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffbb1d;
+  background-clip: content-box;
+  border-radius: 9px;
+  border: 2px solid #ffbb1d;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
+::-webkit-resizer {
+  display: none;
+}
+
+.frame {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    height: 100%;
+    z-index: 10000;
+    background: #fff;
+}
+
+.frame .loader {
+    height: 100%;
+    text-align: center;
+    width: 100%;
+}
+.rings {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  transform: scale(0.5);
+}
+
+.ring {
+  box-shadow:
+    -10px -10px 15px rgba(255, 255, 255, 0.3),
+    10px 10px 15px rgba(70, 70, 70, 0.15),
+    inset -10px -10px 15px rgba(255, 255, 255, 0.3),
+    inset 10px 10px 15px rgba(70, 70, 70, 0.15);
+  border: 13px solid #ececec;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ring1 {
+  height: 28rem;
+  width: 28rem;
+  animation: glow1 2.5s infinite;
+  margin: 0 auto;
+}
+
+@keyframes glow1 {
+  60% {
+    background-color: #ececec;
+  }
+  80% {
+    background-color: #ffdc40;
+  }
+  100% {
+    background-color: #ffdc40;
+  }
+}
+
+.ring2 {
+  height: 20rem;
+  width: 20rem;
+  animation: glow2 2.5s infinite;
+}
+
+@keyframes glow2 {
+  40% {
+    background-color: #ececec;
+  }
+  60% {
+    background-color: #fab8c4;
+  }
+  100% {
+    background-color: #fab8c4;
+  }
+}
+
+.ring3 {
+  height: 12rem;
+  width: 12rem;
+  animation: glow3 2.5s infinite;
+}
+
+@keyframes glow3 {
+  20% {
+    background-color: #ececec;
+  }
+  40% {
+    background-color: #5d51f2;
+  }
+  100% {
+    background-color: #5d51f2;
+  }
+}
+
+.ring4 {
+  height: 5rem;
+  width: 5rem;
+  animation: glow4 2.5s infinite;
+}
+
+@keyframes glow4 {
+  0% {
+    background-color: #ececec;
+  }
+  20% {
+    background-color: #ffdc40;
+  }
+  100% {
+    background-color: #ffdc40;
+  }
+}
+
+
+@keyframes rotation1 {
+	0%   {
+		transform: translate(0px, 0px) rotate(0deg);
+	}
+	25%   {
+		transform: translate(250px,250px) rotate(40deg);
+	}
+	50% {
+		transform: translate(650px,650px) rotate(100deg);
+	}
+	75% {
+		transform: translate(1250px,750px) rotate(280deg);
+	}
+	100% {
+		transform: translate(0, 0) rotate(360deg);
+	}
+}
+
+@keyframes rotation2 {
+	0%   {
+		transform: translate(1920px, 0px) rotate(0deg);
+	}
+	25%   {
+		transform: translate(250px,0) rotate(40deg);
+	}
+	50% {
+		transform: translate(0,650px) rotate(100deg);
+	}
+	75% {
+		transform: translate(1250px,0) rotate(280deg);
+	}
+	100% {
+		transform: translate(1920px, 0) rotate(360deg);
+	}
+}
+@keyframes rotation3 {
+	0%   {
+		transform: translate(0px, 0px) rotate(0deg);
+	}
+	25%   {
+		transform: translate(0,250px) rotate(40deg);
+	}
+	50% {
+		transform: translate(650px,0) rotate(100deg);
+	}
+	75% {
+		transform: translate(0,750px) rotate(280deg);
+	}
+	100% {
+		transform: translate(0, 0) rotate(360deg);
+	}
+}
+@keyframes rotation4 {
+	0%   {
+		transform: translate(0px, 1920px) rotate(0deg);
+	}
+	25%   {
+		transform: translate(350px,0) rotate(40deg);
+	}
+	50% {
+		transform: translate(750px,350px) rotate(100deg);
+	}
+	75% {
+		transform: translate(250px,150px) rotate(280deg);
+	}
+	100% {
+		transform: translate(0, 1920px) rotate(360deg);
+	}
+}
+@keyframes rotation5 {
+	0%   {
+		transform: translate(0px, 0px) rotate(0deg);
+	}
+	25%   {
+		transform: translate(250px,850px) rotate(40deg);
+	}
+	50% {
+		transform: translate(350px,250px) rotate(100deg);
+	}
+	75% {
+		transform: translate(120px,950px) rotate(280deg);
+	}
+	100% {
+		transform: translate(0, 0) rotate(360deg);
+	}
+}
+@keyframes rotation6 {
+	0%   {
+		transform: translate(0px, 800px) rotate(0deg);
+	}
+	25%   {
+		transform: translate(450px,450px) rotate(40deg);
+	}
+	50% {
+		transform: translate(1350px,-250px) rotate(100deg);
+	}
+	75% {
+		transform: translate(120px,950px) rotate(280deg);
+	}
+	100% {
+		transform: translate(0, 800px) rotate(360deg);
+	}
+}
+@keyframes footerText {
+  0%   {
+	  transform: translate(1920px,0);
+	}
+  100% {
+	  transform: translate(-3590px, 0);
+	}
+}
+
+@-webkit-keyframes intervalHamburgerBorder {
+	0% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+	80% {
+		-webkit-transform: scale(1.6);
+		transform: scale(1.6);
+	}
+	100% {
+		opacity: 0;
+		-webkit-transform: scale(1.6);
+		transform: scale(1.6);
+	}
+}
+
+@keyframes intervalHamburgerBorder {
+	0% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+	80% {
+		-webkit-transform: scale(1.6);
+		transform: scale(1.6);
+	}
+	100% {
+		opacity: 0;
+		-webkit-transform: scale(1.6);
+		transform: scale(1.6);
+	}
+}
+
+#pointer-dot {
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border: 2.5px solid #000000;
+    position: fixed;
+    z-index: 101;
+    pointer-events: none;
+    border-radius: 100px;
+    transition: border-color 0.5s;
+}
+
+#pointer-ring {
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    padding: 15px;
+    border: 2px solid #ffdc40;
+    position: fixed;
+    border-radius: 100px;
+    z-index: 102;
+    pointer-events: none;
+}
