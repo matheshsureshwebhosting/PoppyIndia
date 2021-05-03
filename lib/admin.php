@@ -3393,22 +3393,68 @@ $mail->MsgHTML($body);
 	}
 	
 	public function sendsms($mobileno,$message){ 
-        $apiKey = urlencode('335958AEcvLtgyxyS5f112ac4P1');
+       // $apiKey = urlencode('335958AEcvLtgyxyS5f112ac4P1');
     
     // Message details
-    $numbers = urlencode($mobileno);
-    $sender = urlencode('POPPYS');
-    $message = rawurlencode($message);
+   // $numbers = urlencode($mobileno);
+    //$sender = urlencode('POPPYS');
+    //$message = rawurlencode($message);
  
     // Prepare data for POST request
-    $data = 'authkey=' . $apiKey . '&route=4&country=91&mobiles=' . $numbers . "&sender=" . $sender . "&message=" . $message;
+   // $data = 'authkey=' . $apiKey . '&route=4&country=91&mobiles=' . $numbers . "&sender=" . $sender . "&message=" . $message;
 
     // Send the GET request with cURL
-    $ch = curl_init('http://api.msg91.com/api/sendhttp.php?' . $data);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    curl_close($ch);
+   // $ch = curl_init('http://api.msg91.com/api/sendhttp.php?' . $data);
+    //curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //$response = curl_exec($ch);
+    //curl_close($ch);
+
+
+$mobileNumber = "91".$mobileno;
+
+$senderId = "POPPYS";
+
+$message = urlencode($message);
+
+$route = 4;
+
+//Prepare you post parameters
+$postData = array(
+    'mobiles' => $mobileNumber,
+    'message' => $message,
+    'sender' => $senderId,
+    'route' => $route
+);
+
+$url="http://api.msg91.com/api/v2/sendsms";
+
+
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => "$url",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => $postData,
+    CURLOPT_HTTPHEADER => array(
+        "authkey: 335958AEcvLtgyxyS5f112ac4P1",
+        "content-type: multipart/form-data"
+    ),
+));
+
+$response = curl_exec($curl);
+
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+    echo "cURL Error #:" . $err;
+} else {
+    echo $response;
+}
     }
+
+    
 
     public function CancelOrder($id){ extract($_POST);
     	$cancel_reason=$this->clean('cancel_reason');
