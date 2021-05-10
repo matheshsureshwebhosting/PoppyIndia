@@ -1,0 +1,161 @@
+<?php include("lib/common.php"); $menu='slider'; ?><!DOCTYPE html> <?php $ptype="Coupon";
+$res=$objMain->getRow("select * from coupon where id=".$id);
+
+ ?>
+<html lang="en">
+<head>
+    <?php include("inc/header_scripts.php"); ?>
+    <title>Update <?php echo $ptype; ?></title>
+</head>
+<body class="app header-fixed left-sidebar-fixed right-sidebar-fixed right-sidebar-overlay right-sidebar-hidden">
+
+    <!--===========header start===========-->
+   <?php include("inc/header.php"); ?>
+    <!--===========header end===========-->
+
+    <!--===========app body start===========-->
+    <div class="app-body">
+
+        <!--left sidebar start-->
+        <?php include("inc/sidebar.php"); ?>
+        <!--left sidebar end-->
+
+        <!--main contents start-->
+        <main class="main-content">
+            <!--page title start-->
+            <div class="page-title">
+                <h4 class="mb-0">Update <?php echo $ptype; ?>
+                </h4>
+                <ol class="breadcrumb mb-0 pl-0 pt-1 pb-0">
+                    <li class="breadcrumb-item"><a href="dashboard.php" class="default-color">Home</a></li>
+                    <li class="breadcrumb-item active">Update <?php echo $ptype; ?></li>
+                </ol>
+            </div>
+            <!--page title end-->
+
+
+            <div class="container-fluid">
+
+                <!-- state start-->
+                <div class="row">
+                    
+                    <div class=" col-md-4">
+                        <div class="card card-shadow mb-4">
+                            <div class="card-header">
+
+                            </div>
+                            <div class="card-body">
+                                <form method="post" action="init.php?module=admin&action=coupon&do=update&id=<?php echo $id; ?>" enctype="multipart/form-data" >
+                                   
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Coupon Code</label>
+                                        <input type="text" name="coupon_code" id="coupon_code" required="" class="form-control" value="<?php echo $res['coupon_code']; ?>" style="text-transform: uppercase;" required="">
+                                    </div>
+                                      <div class="row">
+                                    <div class="form-group col-lg-12">
+                                        <label for="exampleFormControlTextarea1">Category</label>
+                                        <div class="form-group">
+                                            <label class="control control-solid control-solid-info  control--radio">  Mattress
+                                        <input type="radio" name="product_category" value="16" <?php if($res['product_category']=='16') echo "checked"; ?> />
+                                        <div class="control__indicator"></div>
+                                    </label>
+                                    <label class="control control-solid control-solid-info control--radio"> Accessories
+                                        <input type="radio" name="product_category" value="15" <?php if($res['product_category']=='15') echo "checked"; ?>  />
+                                        <div class="control__indicator"></div>
+                                    </label>
+                                    
+                                        </div>
+                                    </div>
+                                 </div>   
+
+<div class="row">
+                                    <div class="form-group col-lg-12">
+                                        <label for="exampleFormControlTextarea1">Type</label>
+                                        <div class="form-group">
+                                            <label class="control control-solid control-solid-info  control--radio"> Flat 
+                                        <input type="radio" name="discount_type" value="flat" <?php if($res['discount_type']=='flat') echo "checked"; ?> />
+                                        <div class="control__indicator"></div>
+                                    </label>
+                                    <label class="control control-solid control-solid-info control--radio"> Percentage
+                                        <input type="radio" name="discount_type" value="percentage" <?php if($res['discount_type']=='percentage') echo "checked"; ?>  />
+                                        <div class="control__indicator"></div>
+                                    </label>
+                                    
+                                        </div>
+                                    </div>
+             </div>     
+
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Discount Value</label>
+                                        <input type="text" name="discount_value" id="discount_value" value="<?php echo $res['discount_value']; ?>" required="" class="form-control inr" required="">
+                                    </div> 
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Start Date</label>
+                                        <input type="text" name="start_date" id="start_date" required="" value="<?php echo date("d-m-Y",strtotime($res['start_date'])); ?>" class="form-control  date-picker-input" required="">
+                                    </div> 
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Expire Date</label>
+                                        <input type="text" name="expire_date" id="expire_date" required="" value="<?php echo date("d-m-Y",strtotime($res['expire_date'])); ?>" class="form-control date-picker-input" required="">
+                                    </div> 
+                                
+                                    
+                                    <button type="submit" class="btn btn-danger col-lg-4 pull-right">Submit</button>
+                                </form>
+                               
+                            </div>
+                        </div>
+
+                        
+
+
+                        
+
+                       
+
+                        
+
+                    </div>
+                    
+                </div>
+
+                <!-- state end-->
+
+            </div>
+        </main>
+        <!--main contents end-->
+
+        <!--right sidebar start-->
+    <?php include("inc/rightsidebar.php"); ?>
+        <!--right sidebar end-->
+
+    </div>
+    <!--===========app body end===========-->
+
+    <!--===========footer start===========-->
+    <?php include("inc/footer.php"); ?>
+        <!--===========footer end===========-->
+
+
+    <?php include("inc/footer_scripts.php"); ?>
+
+    <script type="text/javascript">
+         function show_district(parent_id){
+        
+        $.ajax({
+        url: 'lib/ajax.php',
+        type: 'post',
+        data: {'id':parent_id, type: 'district' },
+        success: function(data) { 
+           eval(data);
+        }
+    });
+    }
+
+    </script>
+
+</body>
+</html>
