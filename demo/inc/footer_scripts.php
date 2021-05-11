@@ -38,7 +38,8 @@
 	function addtocart(productid){ var error=0;
         var dimension=$('input[name=size]:checked').val();
         var product_color=$('input[name=color]:checked').val();
-		var product_size=$("#product_size").val();
+        var product_size=$("#product_size").val();
+        var product_category=$("#product_category").val();
         var qty=$("#qty").val();
         var price=$("#product_amount").val();
         var custom_length=$("#length").val();
@@ -83,7 +84,7 @@ if(error==0){
 		$.ajax({
             url: 'lib/ajax.php',
             type: 'post',
-            data: { 'type' : 'addtocart', 'productid' : productid, 'dimension' : dimension, 'product_size' : product_size, 'qty' : qty, 'price' : price, 'custom_width' : custom_width, 'custom_length' : custom_length, 'product_type' : size_type,'product_color' : product_color},
+            data: { 'type' : 'addtocart', 'productid' : productid, 'dimension' : dimension, 'product_size' : product_size, 'qty' : qty, 'price' : price, 'custom_width' : custom_width, 'custom_length' : custom_length, 'product_type' : size_type,'product_color' : product_color,'product_category' : product_category},
                 beforeSend: function(){
                 },
             success: function(obj) { 
@@ -107,6 +108,8 @@ if(error==0){
         var dimension=$('input[name=size]:checked').val();
         var product_color=$('input[name=color]:checked').val();
         var product_size=$("#product_size").val();
+                var product_category=$("#product_category"+productid).val();
+
         var qty=$("#qty"+productid).val();
         var price=$("#product_amount"+productid).val();
         var custom_length=$("#length").val();
@@ -151,7 +154,7 @@ if(error==0){
         $.ajax({
             url: 'lib/ajax.php',
             type: 'post',
-            data: { 'type' : 'addtocart', 'productid' : productid, 'dimension' : dimension, 'product_size' : product_size, 'qty' : qty, 'price' : price, 'custom_width' : custom_width, 'custom_length' : custom_length, 'product_type' : size_type,'product_color' : product_color},
+            data: { 'type' : 'addtocart', 'productid' : productid, 'dimension' : dimension, 'product_size' : product_size, 'qty' : qty, 'price' : price, 'custom_width' : custom_width, 'custom_length' : custom_length, 'product_type' : size_type,'product_color' : product_color,'product_category' : product_category},
                 beforeSend: function(){
                 },
             success: function(obj) { 
