@@ -1,6 +1,6 @@
 <?php extract($_REQUEST); require_once 'connection.php'; require_once 'functions.php'; require_once 'admin.php'; require_once 'PHPMailer/class.phpmailer.php';
 
-if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;
+if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;$mat_price=0;$asc_price=0;
 			if(!isset($_SESSION['items']) || count($_SESSION['items'])==0){  //echo "--1--";
 				$_SESSION['items'][0]['productid']=$productid;
 				$_SESSION['items'][0]['dimension']=$dimension;
@@ -11,8 +11,12 @@ if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;
 				$_SESSION['items'][0]['custom_width']=$custom_width;
 				$_SESSION['items'][0]['product_type']=$product_type;
 				$_SESSION['items'][0]['product_color']=$product_color;
+				$_SESSION['items'][0]['product_category']=$product_category;
 				$_SESSION['total_qty']=$qty;
-				$total_price=$qty*$_SESSION['items'][0]['price'];
+				if($product_category==16)
+				$mat_price=$qty*$_SESSION['items'][0]['price'];
+				if($product_category==15)
+				$asc_price=$qty*$_SESSION['items'][0]['price'];
 			} else if(count($_SESSION['items'])>0){ //echo "---2---";
 
 				$_SESSION['total_qty']=$_SESSION['total_qty']+$qty;
@@ -32,8 +36,10 @@ if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;
 						$_SESSION['items'][$key]['qty']=$_SESSION['items'][$key]['qty']+$qty;
 						$ctqty+=$_SESSION['items'][$key]['qty'];
 					}
-
-					$total_price=$total_price+($_SESSION['items'][$key]['price']*$_SESSION['items'][$key]['qty']);
+                    	if($_SESSION['items'][$key]['product_category']==16)
+					$mat_price=$mat_price+($_SESSION['items'][$key]['price']*$_SESSION['items'][$key]['qty']);
+                    	if($_SESSION['items'][$key]['product_category']==15)
+					$asc_price=$asc_price+($_SESSION['items'][$key]['price']*$_SESSION['items'][$key]['qty']);
 				}
 
 				if($cnt==0){
@@ -49,19 +55,34 @@ if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;
 					$_SESSION['items'][$id]['custom_width']=$custom_width;
 					$_SESSION['items'][$id]['product_type']=$product_type;
 					$_SESSION['items'][$id]['product_color']=$product_color;
-					$total_price=$total_price+($_SESSION['items'][$id]['price']*$_SESSION['items'][$id]['qty']);
+					$_SESSION['items'][$id]['product_category']=$product_category;
+
+					if($product_category==16)
+					$mat_price=$mat_price+($_SESSION['items'][$id]['price']*$_SESSION['items'][$id]['qty']);
+                    	if($product_category==15)
+					$asc_price=$asc_price+($_SESSION['items'][$id]['price']*$_SESSION['items'][$id]['qty']);
 				}
 
 			}
-	//print_r($_SESSION);
-	//		echo $total_price;
-	$_SESSION['sub_total']=$total_price;
-	if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat') {
-			$_SESSION['net_amount']=$_SESSION['sub_total']-$_SESSION['discount_value'];
-	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage') {	
-			$_SESSION['discount_value']=round($_SESSION['sub_total']*$_SESSION['discount_val']/100);
-			$_SESSION['net_amount']=$_SESSION['sub_total']-$_SESSION['discount_value'];
+	// print_r($_SESSION['discount_coupon_category']);
+	// 		exit;
+	$_SESSION['mat_total']=$mat_price;
+	$_SESSION['asc_total']=$asc_price;
+	$_SESSION['sub_total']=$mat_price+$asc_price;
+	if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat' && $product_category==16) {
+			$_SESSION['net_amount']=($mat_price-$_SESSION['discount_value'])+$asc_price;
+	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage' && $product_category==16) {	
+			$_SESSION['discount_value']=round($mat_price*$_SESSION['discount_val']/100);
+			$_SESSION['net_amount']=($mat_price-$_SESSION['discount_value'])+$asc_price;
 	}
+
+		if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat' && $product_category==15) {
+			$_SESSION['net_amount']=($asc_price-$_SESSION['discount_value'])+$mat_price;
+	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage'  && $product_category==15) {	
+			$_SESSION['discount_value']=round($asc_price*$_SESSION['discount_val']/100);
+			$_SESSION['net_amount']=($asc_price-$_SESSION['discount_value'])+$mat_price;
+	}
+
 
 	$free_amount=0;
 
@@ -102,7 +123,7 @@ if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;
 } else if($type=='updatecart'){		// print_r($_SESSION);		// Update Cart
 	$_SESSION['total_qty']=0;
 	$qty=intval($qty);
-	$cnt=0; $price=0; $total_price=0;
+	$cnt=0; $price=0; $total_price=0;$mat_price=0;$asc_price=0;
 	foreach($_SESSION['items'] as $key=>$item){
 		if($key==$prodkey){ $cnt=1;
 			$_SESSION['items'][$key]['qty']=$qty;
@@ -111,22 +132,43 @@ if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;
 			$productid=$_SESSION['items'][$key]['productid'];
 		}
 		$_SESSION['total_qty']=$_SESSION['total_qty']+$_SESSION['items'][$key]['qty'];
-		$total_price=$total_price+($_SESSION['items'][$key]['price']*$_SESSION['items'][$key]['qty']);
-	}
+                 if($_SESSION['items'][$key]['product_category']==16)
+					$mat_price=$mat_price+($_SESSION['items'][$key]['price']*$_SESSION['items'][$key]['qty']);
+                    	if($_SESSION['items'][$key]['product_category']==15)
+					$asc_price=$asc_price+($_SESSION['items'][$key]['price']*$_SESSION['items'][$key]['qty']);	
+			}
 	$alert='toastr.success("Item Updated in the Cart","");';
 	//echo "|".$_SESSION['discount_type']."|";
 	$discount_amount=0;
 	$net_amount=0;
-	$_SESSION['sub_total']=$total_price;
-	if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat') {
-			$_SESSION['net_amount']=$_SESSION['sub_total']-$_SESSION['discount_value'];
-			$discount_amount=$_SESSION['discount_value'];
+		$_SESSION['mat_total']=$mat_price;
+	$_SESSION['asc_total']=$asc_price;
+
+    $total_price=$mat_price+$asc_price;
+	$_SESSION['sub_total']=$mat_price+$asc_price;
+	if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat' && $_SESSION['discount_coupon_category']==16) {
+			$_SESSION['net_amount']=($mat_price-$_SESSION['discount_value'])+$asc_price;
 			$net_amount=$_SESSION['net_amount'];
-	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage') {	
-			$_SESSION['discount_value']=round($_SESSION['sub_total']*$_SESSION['discount_val']/100);
-			$_SESSION['net_amount']=$_SESSION['sub_total']-$_SESSION['discount_value'];
 			$discount_amount=$_SESSION['discount_value'];
-			$net_amount=$_SESSION['net_amount'];
+	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage' && $_SESSION['discount_coupon_category']==16) {	
+			$_SESSION['discount_value']=round($mat_price*$_SESSION['discount_val']/100);
+			$_SESSION['net_amount']=($mat_price-$_SESSION['discount_value'])+$asc_price;
+						$net_amount=$_SESSION['net_amount'];
+			$discount_amount=$_SESSION['discount_value'];
+
+	}
+
+		if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat' && $_SESSION['discount_coupon_category']==15) {
+			$_SESSION['net_amount']=($asc_price-$_SESSION['discount_value'])+$mat_price;
+						$net_amount=$_SESSION['net_amount'];
+			$discount_amount=$_SESSION['discount_value'];
+
+	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage' && $_SESSION['discount_coupon_category']==15) {	
+			$_SESSION['discount_value']=round($asc_price*$_SESSION['discount_val']/100);
+			$_SESSION['net_amount']=($asc_price-$_SESSION['discount_value'])+$mat_price;
+						$net_amount=$_SESSION['net_amount'];
+			$discount_amount=$_SESSION['discount_value'];
+
 	}
 
 	$free_1=0; $free_2=0; $free_3=0;
@@ -158,7 +200,7 @@ if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;
 	echo $json;
 
 }  else if($type=='removecart'){			// Remove Cart Item
-	$_SESSION['total_qty']=0; $total_price=0;
+	$_SESSION['total_qty']=0; $total_price=0;$mat_price=0;$asc_price=0;
 	// print_r($_SESSION['items']);
 	// exit;
 	foreach($_SESSION['items'] as $pkey=>$item){
@@ -166,22 +208,45 @@ if($type=='addtocart') { $total_qty=0; $total_price=0; $ctqty=$qty;
 			unset($_SESSION['items'][$pkey]);
 		} else {
 			$_SESSION['total_qty']=$_SESSION['total_qty']+$_SESSION['items'][$pkey]['qty'];
-			$total_price=$total_price+($_SESSION['items'][$pkey]['price']*$_SESSION['items'][$pkey]['qty']);
+				if($_SESSION['items'][$pkey]['product_category']==16)
+					$mat_price=$mat_price+($_SESSION['items'][$pkey]['price']*$_SESSION['items'][$pkey]['qty']);
+                    	if($_SESSION['items'][$pkey]['product_category']==15)
+					$asc_price=$asc_price+($_SESSION['items'][$pkey]['price']*$_SESSION['items'][$pkey]['qty']);
 		}
 	}
 	$discount_amount=0;
 	$net_amount=0;
-	$_SESSION['sub_total']=$total_price;
-	if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat') {
-			$_SESSION['net_amount']=$_SESSION['sub_total']-$_SESSION['discount_value'];
-			$discount_amount=$_SESSION['discount_value'];
+		$_SESSION['mat_total']=$mat_price;
+	$_SESSION['asc_total']=$asc_price;
+    $total_price=$mat_price+$asc_price;
+	$_SESSION['sub_total']=$mat_price+$asc_price;
+	
+		if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat' && $_SESSION['discount_coupon_category']==16) {
+			$_SESSION['net_amount']=($mat_price-$_SESSION['discount_value'])+$asc_price;
 			$net_amount=$_SESSION['net_amount'];
-	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage') {	
-			$_SESSION['discount_value']=round($_SESSION['sub_total']*$_SESSION['discount_val']/100);
-			$_SESSION['net_amount']=$_SESSION['sub_total']-$_SESSION['discount_value'];
 			$discount_amount=$_SESSION['discount_value'];
+
+	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage' && $_SESSION['discount_coupon_category']==16) {	
+			$_SESSION['discount_value']=round($mat_price*$_SESSION['discount_val']/100);
+			$_SESSION['net_amount']=($mat_price-$_SESSION['discount_value'])+$asc_price;
 			$net_amount=$_SESSION['net_amount'];
+			$discount_amount=$_SESSION['discount_value'];
+
 	}
+
+		if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='flat' && $_SESSION['discount_coupon_category']==15) {
+			$_SESSION['net_amount']=($asc_price-$_SESSION['discount_value'])+$mat_price;
+									$net_amount=$_SESSION['net_amount'];
+			$discount_amount=$_SESSION['discount_value'];
+
+	} else if(isset($_SESSION['discount_type']) && $_SESSION['discount_type']=='percentage' && $_SESSION['discount_coupon_category']==15) {	
+			$_SESSION['discount_value']=round($asc_price*$_SESSION['discount_val']/100);
+			$_SESSION['net_amount']=($asc_price-$_SESSION['discount_value'])+$mat_price;
+			$net_amount=$_SESSION['net_amount'];
+			$discount_amount=$_SESSION['discount_value'];
+
+	}
+
 	$alert='toastr.success("Item removed in the Cart","");';
 	$data = array("result" => 'success', 'alert' => $alert, 'total_qty' => $_SESSION['total_qty'], 'discount_amount'=> $discount_amount, 'net_amount' => $net_amount, 'total_price' => $objMain->INR($total_price));
 	$json = json_encode($data);
@@ -307,14 +372,24 @@ if(!empty($prices))
 	if(!empty($res)){
 		$_SESSION['discount_coupon']=$coupon;
 		$_SESSION['discount_type']=$res['discount_type'];
-		if($res['discount_type']=='flat'){
+		$_SESSION['discount_coupon_category']=$res['product_category'];
+		if($res['discount_type']=='flat' && $res['product_category']==16){
 			$_SESSION['discount_value']=$res['discount_value'];
 			$_SESSION['discount_val']=$res['discount_value'];
-			$_SESSION['net_amount']=$_SESSION['sub_total']-$res['discount_value'];
-		} else if($res['discount_type']=='percentage'){		
+			$_SESSION['net_amount']=($_SESSION['mat_total']-$res['discount_value'])+$_SESSION['asc_total'];
+		} else if($res['discount_type']=='percentage' && $res['product_category']==16){		
 			$_SESSION['discount_val']=$res['discount_value'];	
-			$_SESSION['discount_value']=round($_SESSION['sub_total']*$res['discount_value']/100);
-			$_SESSION['net_amount']=$_SESSION['sub_total']-$_SESSION['discount_value'];
+			$_SESSION['discount_value']=round($_SESSION['mat_total']*$res['discount_value']/100);
+			$_SESSION['net_amount']=($_SESSION['mat_total']-$_SESSION['discount_value'])+$_SESSION['asc_total'];
+		}
+		if($res['discount_type']=='flat' && $res['product_category']==15){
+			$_SESSION['discount_value']=$res['discount_value'];
+			$_SESSION['discount_val']=$res['discount_value'];
+			$_SESSION['net_amount']=($_SESSION['asc_total']-$res['discount_value'])+$_SESSION['mat_total'];
+		} else if($res['discount_type']=='percentage' && $res['product_category']==15){		
+			$_SESSION['discount_val']=$res['discount_value'];	
+			$_SESSION['discount_value']=round($_SESSION['asc_total']*$res['discount_value']/100);
+			$_SESSION['net_amount']=($_SESSION['asc_total']-$_SESSION['discount_value'])+$_SESSION['mat_total'];
 		}
 		$status='success';
 		$discount_value=$objMain->INR($_SESSION['discount_value']);

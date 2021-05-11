@@ -153,6 +153,8 @@ if(!empty($images)){
             </div>
 
             <input type="hidden" name="product_amount" id="product_amount" value="<?php echo $objMain->INR($product['product_price']); ?>">
+                                                         <input type="hidden" name="product_category" id="product_category" value="<?php echo $product['category']; ?>">
+
             <input type="hidden" name="product_size_type" id="product_size_type" value="normal">
 <div class="sharethis-inline-share-buttons" style="margin-top:34px"></div>
 

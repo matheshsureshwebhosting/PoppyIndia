@@ -241,6 +241,8 @@ if(!empty($product_size)){ $i=0;
             </div>
 
             <input type="hidden" name="product_amount" id="product_amount" value="<?php echo $objMain->INR($product['product_price']); ?>">
+                                             <input type="hidden" name="product_category" id="product_category" value="<?php echo $product['category']; ?>">
+
             <input type="hidden" name="product_size_type" id="product_size_type" value="normal">
 <div class="sharethis-inline-share-buttons" style="margin-top:34px"></div>
 
@@ -281,6 +283,8 @@ if(!empty($product_size)){ $i=0;
                     <label class="col-md-3">QTY</label>
                     <input type="number" id="qty<?php echo $acs['id']; ?>" class="input-slide" value="1">
                      <input type="hidden" name="product_amount" id="product_amount<?php echo $acs['id']; ?>" value="<?php echo $objMain->INR($acs['product_price']); ?>">
+                                             <input type="hidden" name="product_category" id="product_category<?php echo $acs['id']; ?>" value="<?php echo $acs['category']; ?>">
+
                     </div>
                   </div>
                                   
